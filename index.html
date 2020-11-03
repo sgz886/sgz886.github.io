@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html lang="zn-Hans">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     
-    <title>My New Hugo Site</title>
+    <title>Gordon Su&#39;s blog</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
     <meta name="description" content="">
     <meta name="generator" content="Hugo 0.77.0" />
@@ -27,20 +27,20 @@
 
     
     
-      <link href="/index.xml" rel="alternate" type="application/rss+xml" title="My New Hugo Site" />
-      <link href="/index.xml" rel="feed" type="application/rss+xml" title="My New Hugo Site" />
+      <link href="/index.xml" rel="alternate" type="application/rss+xml" title="Gordon Su&#39;s blog" />
+      <link href="/index.xml" rel="feed" type="application/rss+xml" title="Gordon Su&#39;s blog" />
       
     
     
-    <meta property="og:title" content="My New Hugo Site" />
+    <meta property="og:title" content="Gordon Su&#39;s blog" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://example.org/" />
-<meta property="og:updated_time" content="2020-11-03T18:45:40+08:00" />
-<meta itemprop="name" content="My New Hugo Site">
+<meta property="og:updated_time" content="2020-11-03T21:42:46+08:00" />
+<meta itemprop="name" content="Gordon Su&#39;s blog">
 <meta itemprop="description" content="">
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="My New Hugo Site"/>
+<meta name="twitter:title" content="Gordon Su&#39;s blog"/>
 <meta name="twitter:description" content=""/>
 
 	
@@ -56,7 +56,7 @@
   <div class="flex-l justify-between items-center center">
     <a href="/" class="f3 fw2 hover-white no-underline white-90 dib">
       
-        My New Hugo Site
+        Gordon Su&#39;s blog
       
     </a>
     <div class="flex-l items-center">
@@ -85,7 +85,7 @@
 
       <div class="tc-l pv3 ph3 ph4-ns">
         <h1 class="f2 f-subheadline-l fw2 light-silver mb0 lh-title">
-          My New Hugo Site
+          Gordon Su&#39;s blog
         </h1>
         
       </div>
@@ -129,12 +129,48 @@
       
       <div class="blah w-100">
         <h1 class="f3 fw1 athelas mt0 lh-title">
+          <a href="http://example.org/posts/hogo_blog/" class="color-inherit dim link">
+            用Hogo搭建github.io blog
+            </a>
+        </h1>
+        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
+          这是一篇学习笔记，介绍用hugo搭建博客。
+1.安装hugo 我使用用Linux安装。
+apt-get安装方式，缺点是版本较旧。
+从release页面下载最新的.deb文件，用 sudo dpkg --install &lt;包名&gt; 安装。
+查看安装的位置: which hugo， 结果是 /usr/local/bin/hugo 。
+2.创建站点 hugo new site xx.github.io.creator 3. 增加主题 直接复制代码
+cd quickstart git init git submodule add https://github.com/budparr/gohugo-theme-ananke.git themes/ananke 4.增加内容 hugo new posts/my-first-post.md 将会在 contents/posts 路径下新建一个md文件。
+5.开启hugo服务 hugo server -D 在本地访问页面，看看效果。
+6. 自定义主题 其实就是更改配置，编辑config.toml。
+7.建造静态页面 静态页面被输出在public文件夹
+hugo -D 8.将public文件夹上传到GitHub 将public文件夹建立git
+git init git branch -M main #将默认的master 支名改为 main git add . git commit -V 然后在GitHub里建立一个仓库，名字为 xx.
+        </div>
+          <a href="http://example.org/posts/hogo_blog/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+          </div>
+        
+          <div class="relative w-100 mb4">
+            
+<article class="bb b--black-10">
+  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
+    <div class="flex flex-column flex-row-ns">
+      
+      <div class="blah w-100">
+        <h1 class="f3 fw1 athelas mt0 lh-title">
           <a href="http://example.org/posts/first-post/" class="color-inherit dim link">
             First Post
             </a>
         </h1>
         <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          大家好 这是一篇介绍搭建博客的博客。
+          hello 使用博客记录自己的编程学习。
+加油。
         </div>
           <a href="http://example.org/posts/first-post/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
         
@@ -156,7 +192,7 @@
     <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://example.org/" >
-    &copy;  My New Hugo Site 2020 
+    &copy;  Gordon Su's blog 2020 
   </a>
     <div>
 

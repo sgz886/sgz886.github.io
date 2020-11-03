@@ -1,19 +1,40 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>My New Hugo Site</title>
+    <title>Gordon Su&#39;s blog</title>
     <link>http://example.org/</link>
-    <description>Recent content on My New Hugo Site</description>
+    <description>Recent content on Gordon Su&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Tue, 03 Nov 2020 18:45:40 +0800</lastBuildDate><atom:link href="http://example.org/index.xml" rel="self" type="application/rss+xml" />
+    <language>zn-Hans</language>
+    <lastBuildDate>Tue, 03 Nov 2020 21:42:46 +0800</lastBuildDate><atom:link href="http://example.org/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>用Hogo搭建github.io blog</title>
+      <link>http://example.org/posts/hogo_blog/</link>
+      <pubDate>Tue, 03 Nov 2020 21:42:46 +0800</pubDate>
+      
+      <guid>http://example.org/posts/hogo_blog/</guid>
+      <description>这是一篇学习笔记，介绍用hugo搭建博客。
+1.安装hugo 我使用用Linux安装。
+apt-get安装方式，缺点是版本较旧。
+从release页面下载最新的.deb文件，用 sudo dpkg --install &amp;lt;包名&amp;gt; 安装。
+查看安装的位置: which hugo， 结果是 /usr/local/bin/hugo 。
+2.创建站点 hugo new site xx.github.io.creator 3. 增加主题 直接复制代码
+cd quickstart git init git submodule add https://github.com/budparr/gohugo-theme-ananke.git themes/ananke 4.增加内容 hugo new posts/my-first-post.md 将会在 contents/posts 路径下新建一个md文件。
+5.开启hugo服务 hugo server -D 在本地访问页面，看看效果。
+6. 自定义主题 其实就是更改配置，编辑config.toml。
+7.建造静态页面 静态页面被输出在public文件夹
+hugo -D 8.将public文件夹上传到GitHub 将public文件夹建立git
+git init git branch -M main #将默认的master 支名改为 main git add . git commit -V 然后在GitHub里建立一个仓库，名字为 xx.</description>
+    </item>
+    
     <item>
       <title>First Post</title>
       <link>http://example.org/posts/first-post/</link>
       <pubDate>Tue, 03 Nov 2020 18:45:40 +0800</pubDate>
       
       <guid>http://example.org/posts/first-post/</guid>
-      <description>大家好 这是一篇介绍搭建博客的博客。</description>
+      <description>hello 使用博客记录自己的编程学习。
+加油。</description>
     </item>
     
   </channel>

@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Gordon Su&#39;s blog</title>
-    <link>http://example.org/</link>
+    <link>http://sgz886.github.io/</link>
     <description>Recent content on Gordon Su&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zn-Hans</language>
-    <lastBuildDate>Tue, 03 Nov 2020 21:42:46 +0800</lastBuildDate><atom:link href="http://example.org/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 03 Nov 2020 21:42:46 +0800</lastBuildDate><atom:link href="http://sgz886.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>用Hogo搭建github.io blog</title>
-      <link>http://example.org/posts/hogo_blog/</link>
+      <link>http://sgz886.github.io/posts/hogo_blog/</link>
       <pubDate>Tue, 03 Nov 2020 21:42:46 +0800</pubDate>
       
-      <guid>http://example.org/posts/hogo_blog/</guid>
+      <guid>http://sgz886.github.io/posts/hogo_blog/</guid>
       <description>这是一篇学习笔记，介绍用hugo搭建博客。
 1.安装hugo 我使用用Linux安装。
 apt-get安装方式，缺点是版本较旧。
@@ -29,10 +29,10 @@ git init git branch -M main #将默认的master 支名改为 main git add . git 
     
     <item>
       <title>First Post</title>
-      <link>http://example.org/posts/first-post/</link>
+      <link>http://sgz886.github.io/posts/first-post/</link>
       <pubDate>Tue, 03 Nov 2020 18:45:40 +0800</pubDate>
       
-      <guid>http://example.org/posts/first-post/</guid>
+      <guid>http://sgz886.github.io/posts/first-post/</guid>
       <description>hello 使用博客记录自己的编程学习。
 加油。</description>
     </item>

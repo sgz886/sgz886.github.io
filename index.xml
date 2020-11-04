@@ -6,7 +6,28 @@
     <description>Recent content on Gordon Su&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zn-Hans</language>
-    <lastBuildDate>Tue, 03 Nov 2020 21:42:46 +0800</lastBuildDate><atom:link href="http://sgz886.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 04 Nov 2020 16:59:42 +0800</lastBuildDate><atom:link href="http://sgz886.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java包管理和Maven(Pachage Management and Maven)</title>
+      <link>http://sgz886.github.io/posts/pachage-management-java-maven/</link>
+      <pubDate>Wed, 04 Nov 2020 16:59:42 +0800</pubDate>
+      
+      <guid>http://sgz886.github.io/posts/pachage-management-java-maven/</guid>
+      <description>包管理 我们要使用一些第三方类，就要告诉JVM从哪里找。
+JVM在classpath 参数（一般情况是很多个jar包的绝对路径）中寻找类。
+包管理可以自动生成classpath参数，以及解决各个包的依赖关系中产生的冲突。
+Maven是Java最著名的包管理工具。
+maven介绍 Maven按照约定为所有的包编号，方便检索，就像一个图书分类编号的规则，很好用。最重要的是下面3个字段：
+groupId # 组织唯一的标识符 artifactId # 项目ID version # 版本号 Maven对包依赖冲突的解决原则：
+ 离工程最近的包胜出 距离相同，则先加载的包胜出  下面常见异常一般是包依赖冲突导致的。
+ AbstractMethodError NoClassDefFoundError ClassNotFoundException LinkageError  Maven的解决方法  在dependencies里将要使用的版本放进去，通过距离工程最近的优势排除掉其他包 在产生冲突的包的dependency中将该包exclude  在硬核空间的练习 在老师给的测试题目中，pom.xml引入了4个依赖包，分别是 test-library-a , spring-web, junit-jupiter-api, junit-jupiter-engine
+查看冲突 使用 Maven helper 插件，它把冲突的插件显示了出来
+对 test-library-a和spring-web的分析
+test-library-a 在老师的指导下，查看了test-library-a的源代码，其中build.gradle文件指出了它依赖 org.springframework:spring-web:4.3.6.RELEASE，若打开 external libraries的&amp;rsquo;test-library-a.jar&amp;rsquo;所在文件夹，能看到一个pom.xml，也有类似的dependency语句。
+spring-web 搜索源代码，在spring5.08版官方文档中看到了报错的函数(getJsonpFunction())。
+getJsonpFunction @Deprecated @Nullable public java.lang.String getJsonpFunction() Deprecated. Will be removed as of Spring Framework 5.1, use CORS instead.</description>
+    </item>
+    
     <item>
       <title>用Hogo搭建github.io blog</title>
       <link>http://sgz886.github.io/posts/hogo_blog/</link>

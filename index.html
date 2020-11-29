@@ -36,7 +36,7 @@
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://sgz886.github.io/" />
-<meta property="og:updated_time" content="2020-11-09T21:09:34+08:00" />
+<meta property="og:updated_time" content="2020-11-28T12:12:09+08:00" />
 <meta itemprop="name" content="Gordon Su&#39;s blog">
 <meta itemprop="description" content="">
 <meta name="twitter:card" content="summary"/>
@@ -129,6 +129,37 @@
       
       <div class="blah w-100">
         <h1 class="f3 fw1 athelas mt0 lh-title">
+          <a href="http://sgz886.github.io/posts/multithread/" class="color-inherit dim link">
+            Multithread
+            </a>
+        </h1>
+        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
+          Multithread 多线程 1 并发与并行  并行：指两个或多个事件在同一时刻发生（同时执行）。 并发：指两个或多个事件在同一个时间段内发生(交替执行)。  2 线程与进程  进程：是指一个内存中运行的应用程序，每个进程都有一个独立的内存空间，一个应用程序可以同时运行多个进程；进程也是程序的一次执行过程，是系统运行程序的基本单位；系统运行一个程序即是一个进程从创建、运行到消亡的过程。 线程：是进程中的一个执行单元，负责当前进程中程序的执行，一个进程中至少有一个线程。一个进程中是可以有多个线程的，这个应用程序也可以称之为多线程程序。  进程与线程的区别
+ 进程：有独立的内存空间，进程中的数据存放空间（堆空间和栈空间）是独立的，至少有一个线程。 线程：堆空间是共享的，栈空间是独立的，线程消耗的资源比进程小的多。   1:因为一个进程中的多个线程是并发运行的，那么从微观角度看也是有先后顺序的，哪个线程执行完全取决于 CPU 的调度，程序员是干涉不了的。而这也就造成的多线程的随机性。
+2:Java 程序的进程里面至少包含两个线程，主进程也就是 main()方法线程，另外一个是垃圾回收机制线程。每当使用 java 命令执行一个类时，实际上都会启动一个 JVM，每一个 JVM 实际上就是在操作系统中启动了一个线程，java 本身具备了垃圾的收集机制，所以在 Java 运行时至少会启动两个线程。
+3:由于创建一个线程的开销比创建一个进程的开销小的多，那么我们在开发多任务运行的时候，通常考虑创建多线程，而不是创建多进程。
+ 3 Thread类 线程开启我们需要用到了java.lang.Thread类，API中该类中定义了有关线程的一些方法，具体如下：
+构造方法：
+ public Thread():分配一个新的线程对象。 public Thread(String name):分配一个指定名字的新的线程对象。 public Thread(Runnable target):分配一个带有指定目标新的线程对象。 public Thread(Runnable target,String name):分配一个带有指定目标新的线程对象并指定名字。  常用方法：
+ public String getName():获取当前线程名称。 public void start():导致此线程开始执行; Java虚拟机调用此线程的run方法。 public void run():此线程要执行的任务在此处定义代码。 public static void sleep(long millis):使当前正在执行的线程以指定的毫秒数暂停（暂时停止执行）。 public static Thread currentThread() :返回对当前正在执行的线程对象的引用。  4 创建线程方式  entend Thread 方式 implement Runnable接口 推荐使用这种方式，优势是   代码和线程独立，实现解耦 支持线程池 本方式可以简化为匿名内部类和Lambda表达式，使代码更简洁  implement Callable接口 步骤如下：   MyCallable implement callable （ override run()方法） 用FutureTask 包装 MyCallable 用Thread 包装 FutureTask  5 线程安全线程同步 当我们使用多个线程访问同一资源的时候，且多个线程中对资源有写的操作，很容易出现线程安全问题。
+        </div>
+          <a href="http://sgz886.github.io/posts/multithread/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+          </div>
+        
+          <div class="relative w-100 mb4">
+            
+<article class="bb b--black-10">
+  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
+    <div class="flex flex-column flex-row-ns">
+      
+      <div class="blah w-100">
+        <h1 class="f3 fw1 athelas mt0 lh-title">
           <a href="http://sgz886.github.io/posts/collection-series/" class="color-inherit dim link">
             Collection体系的常用类简介
             </a>
@@ -186,47 +217,18 @@ getJsonpFunction @Deprecated @Nullable public java.lang.String getJsonpFunction(
 
           </div>
         
-          <div class="relative w-100 mb4">
-            
-<article class="bb b--black-10">
-  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
-    <div class="flex flex-column flex-row-ns">
-      
-      <div class="blah w-100">
-        <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="http://sgz886.github.io/posts/hogo_blog/" class="color-inherit dim link">
-            用Hogo搭建github.io blog
-            </a>
-        </h1>
-        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          这是一篇学习笔记，介绍用hugo搭建博客。
-1.安装hugo 我使用用Linux安装。
-apt-get安装方式，缺点是版本较旧。
-从release页面下载最新的.deb文件，用 sudo dpkg --install &lt;包名&gt; 安装。
-查看安装的位置: which hugo， 结果是 /usr/local/bin/hugo 。
-2.创建站点 hugo new site xx.github.io.creator 3. 增加主题 直接复制代码
-cd quickstart git init git submodule add https://github.com/budparr/gohugo-theme-ananke.git themes/ananke 4.增加内容 hugo new posts/my-first-post.md 将会在 contents/posts 路径下新建一个md文件。
-5.开启hugo服务 hugo server -D 在本地访问页面，看看效果。
-6. 自定义主题 其实就是更改配置，编辑config.toml。
-7.建造静态页面 静态页面被输出在public文件夹
-hugo -D 8.将public文件夹上传到GitHub 将public文件夹建立git
-git init git branch -M main #将默认的master 支名改为 main git add . git commit -V 然后在GitHub里建立一个仓库，名字为 xx.
-        </div>
-          <a href="http://sgz886.github.io/posts/hogo_blog/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-        
-      </div>
-    </div>
-  </div>
-</article>
-
-          </div>
-        
       </section>
 
       
       <section class="w-100">
         <h1 class="f3">More</h1>
         
+        
+          <h2 class="f5 fw4 mb4 dib mr3">
+            <a href="http://sgz886.github.io/posts/hogo_blog/" class="link black dim">
+              用Hogo搭建github.io blog
+            </a>
+          </h2>
         
           <h2 class="f5 fw4 mb4 dib mr3">
             <a href="http://sgz886.github.io/posts/first-post/" class="link black dim">

@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zn-Hans">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Multithread | Gordon Su&#39;s blog</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="description" content="Multithread 多线程 1 并发与并行  并行：指两个或多个事件在同一时刻发生（同时执行）。 并发：指两个或多个事件在同一个时间段内发生(交替执行)。  2 线程与进程  进程：是指一个内存中运行的应用程序，每个进程都有一个独立的内存空间，一个应用程序可以同时运行多个进程；进程也是程序的一次执行过程，是系统运行程序的基本单位；系统运行一个程序即是一个进程从创建、运行到消亡的过程。 线程：是进程中的一个执行单元，负责当前进程中程序的执行，一个进程中至少有一个线程。一个进程中是可以有多个线程的，这个应用程序也可以称之为多线程程序。  进程与线程的区别
+ 进程：有独立的内存空间，进程中的数据存放空间（堆空间和栈空间）是独立的，至少有一个线程。 线程：堆空间是共享的，栈空间是独立的，线程消耗的资源比进程小的多。   1:因为一个进程中的多个线程是并发运行的，那么从微观角度看也是有先后顺序的，哪个线程执行完全取决于 CPU 的调度，程序员是干涉不了的。而这也就造成的多线程的随机性。
+2:Java 程序的进程里面至少包含两个线程，主进程也就是 main()方法线程，另外一个是垃圾回收机制线程。每当使用 java 命令执行一个类时，实际上都会启动一个 JVM，每一个 JVM 实际上就是在操作系统中启动了一个线程，java 本身具备了垃圾的收集机制，所以在 Java 运行时至少会启动两个线程。
+3:由于创建一个线程的开销比创建一个进程的开销小的多，那么我们在开发多任务运行的时候，通常考虑创建多线程，而不是创建多进程。
+ 3 Thread类 线程开启我们需要用到了java.lang.Thread类，API中该类中定义了有关线程的一些方法，具体如下：
+构造方法：
+ public Thread():分配一个新的线程对象。 public Thread(String name):分配一个指定名字的新的线程对象。 public Thread(Runnable target):分配一个带有指定目标新的线程对象。 public Thread(Runnable target,String name):分配一个带有指定目标新的线程对象并指定名字。  常用方法：
+ public String getName():获取当前线程名称。 public void start():导致此线程开始执行; Java虚拟机调用此线程的run方法。 public void run():此线程要执行的任务在此处定义代码。 public static void sleep(long millis):使当前正在执行的线程以指定的毫秒数暂停（暂时停止执行）。 public static Thread currentThread() :返回对当前正在执行的线程对象的引用。  4 创建线程方式  entend Thread 方式 implement Runnable接口 推荐使用这种方式，优势是   代码和线程独立，实现解耦 支持线程池 本方式可以简化为匿名内部类和Lambda表达式，使代码更简洁  implement Callable接口 步骤如下：   MyCallable implement callable （ override run()方法） 用FutureTask 包装 MyCallable 用Thread 包装 FutureTask  5 线程安全线程同步 当我们使用多个线程访问同一资源的时候，且多个线程中对资源有写的操作，很容易出现线程安全问题。">
+    <meta name="generator" content="Hugo 0.77.0" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.4fc0b62e4b82c997bb0041217cd6b979.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+
+    
+
+    
+    
+    <meta property="og:title" content="Multithread" />
+<meta property="og:description" content="Multithread 多线程 1 并发与并行  并行：指两个或多个事件在同一时刻发生（同时执行）。 并发：指两个或多个事件在同一个时间段内发生(交替执行)。  2 线程与进程  进程：是指一个内存中运行的应用程序，每个进程都有一个独立的内存空间，一个应用程序可以同时运行多个进程；进程也是程序的一次执行过程，是系统运行程序的基本单位；系统运行一个程序即是一个进程从创建、运行到消亡的过程。 线程：是进程中的一个执行单元，负责当前进程中程序的执行，一个进程中至少有一个线程。一个进程中是可以有多个线程的，这个应用程序也可以称之为多线程程序。  进程与线程的区别
+ 进程：有独立的内存空间，进程中的数据存放空间（堆空间和栈空间）是独立的，至少有一个线程。 线程：堆空间是共享的，栈空间是独立的，线程消耗的资源比进程小的多。   1:因为一个进程中的多个线程是并发运行的，那么从微观角度看也是有先后顺序的，哪个线程执行完全取决于 CPU 的调度，程序员是干涉不了的。而这也就造成的多线程的随机性。
+2:Java 程序的进程里面至少包含两个线程，主进程也就是 main()方法线程，另外一个是垃圾回收机制线程。每当使用 java 命令执行一个类时，实际上都会启动一个 JVM，每一个 JVM 实际上就是在操作系统中启动了一个线程，java 本身具备了垃圾的收集机制，所以在 Java 运行时至少会启动两个线程。
+3:由于创建一个线程的开销比创建一个进程的开销小的多，那么我们在开发多任务运行的时候，通常考虑创建多线程，而不是创建多进程。
+ 3 Thread类 线程开启我们需要用到了java.lang.Thread类，API中该类中定义了有关线程的一些方法，具体如下：
+构造方法：
+ public Thread():分配一个新的线程对象。 public Thread(String name):分配一个指定名字的新的线程对象。 public Thread(Runnable target):分配一个带有指定目标新的线程对象。 public Thread(Runnable target,String name):分配一个带有指定目标新的线程对象并指定名字。  常用方法：
+ public String getName():获取当前线程名称。 public void start():导致此线程开始执行; Java虚拟机调用此线程的run方法。 public void run():此线程要执行的任务在此处定义代码。 public static void sleep(long millis):使当前正在执行的线程以指定的毫秒数暂停（暂时停止执行）。 public static Thread currentThread() :返回对当前正在执行的线程对象的引用。  4 创建线程方式  entend Thread 方式 implement Runnable接口 推荐使用这种方式，优势是   代码和线程独立，实现解耦 支持线程池 本方式可以简化为匿名内部类和Lambda表达式，使代码更简洁  implement Callable接口 步骤如下：   MyCallable implement callable （ override run()方法） 用FutureTask 包装 MyCallable 用Thread 包装 FutureTask  5 线程安全线程同步 当我们使用多个线程访问同一资源的时候，且多个线程中对资源有写的操作，很容易出现线程安全问题。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://sgz886.github.io/posts/multithread/" />
+<meta property="article:published_time" content="2020-11-28T12:12:09+08:00" />
+<meta property="article:modified_time" content="2020-11-28T12:12:09+08:00" />
+<meta itemprop="name" content="Multithread">
+<meta itemprop="description" content="Multithread 多线程 1 并发与并行  并行：指两个或多个事件在同一时刻发生（同时执行）。 并发：指两个或多个事件在同一个时间段内发生(交替执行)。  2 线程与进程  进程：是指一个内存中运行的应用程序，每个进程都有一个独立的内存空间，一个应用程序可以同时运行多个进程；进程也是程序的一次执行过程，是系统运行程序的基本单位；系统运行一个程序即是一个进程从创建、运行到消亡的过程。 线程：是进程中的一个执行单元，负责当前进程中程序的执行，一个进程中至少有一个线程。一个进程中是可以有多个线程的，这个应用程序也可以称之为多线程程序。  进程与线程的区别
+ 进程：有独立的内存空间，进程中的数据存放空间（堆空间和栈空间）是独立的，至少有一个线程。 线程：堆空间是共享的，栈空间是独立的，线程消耗的资源比进程小的多。   1:因为一个进程中的多个线程是并发运行的，那么从微观角度看也是有先后顺序的，哪个线程执行完全取决于 CPU 的调度，程序员是干涉不了的。而这也就造成的多线程的随机性。
+2:Java 程序的进程里面至少包含两个线程，主进程也就是 main()方法线程，另外一个是垃圾回收机制线程。每当使用 java 命令执行一个类时，实际上都会启动一个 JVM，每一个 JVM 实际上就是在操作系统中启动了一个线程，java 本身具备了垃圾的收集机制，所以在 Java 运行时至少会启动两个线程。
+3:由于创建一个线程的开销比创建一个进程的开销小的多，那么我们在开发多任务运行的时候，通常考虑创建多线程，而不是创建多进程。
+ 3 Thread类 线程开启我们需要用到了java.lang.Thread类，API中该类中定义了有关线程的一些方法，具体如下：
+构造方法：
+ public Thread():分配一个新的线程对象。 public Thread(String name):分配一个指定名字的新的线程对象。 public Thread(Runnable target):分配一个带有指定目标新的线程对象。 public Thread(Runnable target,String name):分配一个带有指定目标新的线程对象并指定名字。  常用方法：
+ public String getName():获取当前线程名称。 public void start():导致此线程开始执行; Java虚拟机调用此线程的run方法。 public void run():此线程要执行的任务在此处定义代码。 public static void sleep(long millis):使当前正在执行的线程以指定的毫秒数暂停（暂时停止执行）。 public static Thread currentThread() :返回对当前正在执行的线程对象的引用。  4 创建线程方式  entend Thread 方式 implement Runnable接口 推荐使用这种方式，优势是   代码和线程独立，实现解耦 支持线程池 本方式可以简化为匿名内部类和Lambda表达式，使代码更简洁  implement Callable接口 步骤如下：   MyCallable implement callable （ override run()方法） 用FutureTask 包装 MyCallable 用Thread 包装 FutureTask  5 线程安全线程同步 当我们使用多个线程访问同一资源的时候，且多个线程中对资源有写的操作，很容易出现线程安全问题。">
+<meta itemprop="datePublished" content="2020-11-28T12:12:09+08:00" />
+<meta itemprop="dateModified" content="2020-11-28T12:12:09+08:00" />
+<meta itemprop="wordCount" content="253">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Multithread"/>
+<meta name="twitter:description" content="Multithread 多线程 1 并发与并行  并行：指两个或多个事件在同一时刻发生（同时执行）。 并发：指两个或多个事件在同一个时间段内发生(交替执行)。  2 线程与进程  进程：是指一个内存中运行的应用程序，每个进程都有一个独立的内存空间，一个应用程序可以同时运行多个进程；进程也是程序的一次执行过程，是系统运行程序的基本单位；系统运行一个程序即是一个进程从创建、运行到消亡的过程。 线程：是进程中的一个执行单元，负责当前进程中程序的执行，一个进程中至少有一个线程。一个进程中是可以有多个线程的，这个应用程序也可以称之为多线程程序。  进程与线程的区别
+ 进程：有独立的内存空间，进程中的数据存放空间（堆空间和栈空间）是独立的，至少有一个线程。 线程：堆空间是共享的，栈空间是独立的，线程消耗的资源比进程小的多。   1:因为一个进程中的多个线程是并发运行的，那么从微观角度看也是有先后顺序的，哪个线程执行完全取决于 CPU 的调度，程序员是干涉不了的。而这也就造成的多线程的随机性。
+2:Java 程序的进程里面至少包含两个线程，主进程也就是 main()方法线程，另外一个是垃圾回收机制线程。每当使用 java 命令执行一个类时，实际上都会启动一个 JVM，每一个 JVM 实际上就是在操作系统中启动了一个线程，java 本身具备了垃圾的收集机制，所以在 Java 运行时至少会启动两个线程。
+3:由于创建一个线程的开销比创建一个进程的开销小的多，那么我们在开发多任务运行的时候，通常考虑创建多线程，而不是创建多进程。
+ 3 Thread类 线程开启我们需要用到了java.lang.Thread类，API中该类中定义了有关线程的一些方法，具体如下：
+构造方法：
+ public Thread():分配一个新的线程对象。 public Thread(String name):分配一个指定名字的新的线程对象。 public Thread(Runnable target):分配一个带有指定目标新的线程对象。 public Thread(Runnable target,String name):分配一个带有指定目标新的线程对象并指定名字。  常用方法：
+ public String getName():获取当前线程名称。 public void start():导致此线程开始执行; Java虚拟机调用此线程的run方法。 public void run():此线程要执行的任务在此处定义代码。 public static void sleep(long millis):使当前正在执行的线程以指定的毫秒数暂停（暂时停止执行）。 public static Thread currentThread() :返回对当前正在执行的线程对象的引用。  4 创建线程方式  entend Thread 方式 implement Runnable接口 推荐使用这种方式，优势是   代码和线程独立，实现解耦 支持线程池 本方式可以简化为匿名内部类和Lambda表达式，使代码更简洁  implement Callable接口 步骤如下：   MyCallable implement callable （ override run()方法） 用FutureTask 包装 MyCallable 用Thread 包装 FutureTask  5 线程安全线程同步 当我们使用多个线程访问同一资源的时候，且多个线程中对资源有写的操作，很容易出现线程安全问题。"/>
+
+	
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="/" class="f3 fw2 hover-white no-underline white-90 dib">
+      
+        Gordon Su&#39;s blog
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked">
+          
+        POSTS
+      </aside>
+      
+
+
+
+
+  <div id="sharing" class="mt3">
+
+    
+    <a href="https://www.facebook.com/sharer.php?u=http://sgz886.github.io/posts/multithread/" class="facebook no-underline" aria-label="share on Facebook">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M28.765,50.32h6.744V33.998h4.499l0.596-5.624h-5.095  l0.007-2.816c0-1.466,0.14-2.253,2.244-2.253h2.812V17.68h-4.5c-5.405,0-7.307,2.729-7.307,7.317v3.377h-3.369v5.625h3.369V50.32z   M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;"/></svg>
+
+    </a>
+
+    
+    
+    <a href="https://twitter.com/share?url=http://sgz886.github.io/posts/multithread/&amp;text=Multithread" class="twitter no-underline" aria-label="share on Twitter">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+    </a>
+
+    
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://sgz886.github.io/posts/multithread/&amp;title=Multithread" class="linkedin no-underline" aria-label="share on LinkedIn">
+      <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+    </a>
+  </div>
+
+
+      <h1 class="f1 athelas mt3 mb1">Multithread</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2020-11-28T12:12:09+08:00">November 28, 2020</time>
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><h1 id="multithread-多线程">Multithread 多线程</h1>
+<h2 id="1-并发与并行">1 并发与并行</h2>
+<ul>
+<li><strong>并行</strong>：指两个或多个事件在<strong>同一时刻</strong>发生（同时执行）。</li>
+<li><strong>并发</strong>：指两个或多个事件在<strong>同一个时间段内</strong>发生(交替执行)。</li>
+</ul>
+<!-- raw HTML omitted -->
+<p><img src="/images/5multithread/concurrent.bmp" alt="concurrent"></p>
+<h2 id="2-线程与进程">2 线程与进程</h2>
+<ul>
+<li><strong>进程</strong>：是指一个内存中运行的应用程序，每个进程都有一个独立的内存空间，一个应用程序可以同时运行多个进程；进程也是程序的一次执行过程，是系统运行程序的基本单位；系统运行一个程序即是一个进程从创建、运行到消亡的过程。</li>
+<li><strong>线程</strong>：是进程中的一个执行单元，负责当前进程中程序的执行，一个进程中至少有一个线程。一个进程中是可以有多个线程的，这个应用程序也可以称之为多线程程序。</li>
+</ul>
+<p><strong>进程与线程的区别</strong></p>
+<ul>
+<li>进程：有独立的内存空间，进程中的数据存放空间（堆空间和栈空间）是独立的，至少有一个线程。</li>
+<li>线程：堆空间是共享的，栈空间是独立的，线程消耗的资源比进程小的多。</li>
+</ul>
+<blockquote>
+<p>1:因为一个进程中的多个线程是并发运行的，那么从微观角度看也是有先后顺序的，哪个线程执行完全取决于 CPU 的调度，程序员是干涉不了的。而这也就造成的多线程的随机性。</p>
+<p>2:Java 程序的进程里面至少包含两个线程，主进程也就是 main()方法线程，另外一个是垃圾回收机制线程。每当使用 java 命令执行一个类时，实际上都会启动一个 JVM，每一个 JVM 实际上就是在操作系统中启动了一个线程，java 本身具备了垃圾的收集机制，所以在 Java 运行时至少会启动两个线程。</p>
+<p>3:由于创建一个线程的开销比创建一个进程的开销小的多，那么我们在开发多任务运行的时候，通常考虑创建多线程，而不是创建多进程。</p>
+</blockquote>
+<h2 id="3-thread类">3 Thread类</h2>
+<p>线程开启我们需要用到了<code>java.lang.Thread</code>类，API中该类中定义了有关线程的一些方法，具体如下：</p>
+<p><strong>构造方法：</strong></p>
+<ul>
+<li><code>public Thread()</code>:分配一个新的线程对象。</li>
+<li><code>public Thread(String name)</code>:分配一个指定名字的新的线程对象。</li>
+<li><code>public Thread(Runnable target)</code>:分配一个带有指定目标新的线程对象。</li>
+<li><code>public Thread(Runnable target,String name)</code>:分配一个带有指定目标新的线程对象并指定名字。</li>
+</ul>
+<p><strong>常用方法：</strong></p>
+<ul>
+<li><code>public String getName()</code>:获取当前线程名称。</li>
+<li><code>public void start()</code>:导致此线程开始执行; Java虚拟机调用此线程的run方法。</li>
+<li><code>public void run()</code>:此线程要执行的任务在此处定义代码。</li>
+<li><code>public static void sleep(long millis)</code>:使当前正在执行的线程以指定的毫秒数暂停（暂时停止执行）。</li>
+<li><code>public static Thread currentThread()  </code>:返回对当前正在执行的线程对象的引用。</li>
+</ul>
+<h2 id="4-创建线程方式">4 创建线程方式</h2>
+<ol>
+<li>entend Thread 方式</li>
+<li>implement Runnable接口
+推荐使用这种方式，优势是</li>
+</ol>
+<ul>
+<li>代码和线程独立，实现解耦</li>
+<li>支持线程池
+本方式可以简化为匿名内部类和Lambda表达式，使代码更简洁</li>
+</ul>
+<ol start="3">
+<li>implement Callable接口
+步骤如下：</li>
+</ol>
+<ul>
+<li>MyCallable implement callable   （ override run()方法）</li>
+<li>用FutureTask 包装 MyCallable</li>
+<li>用Thread 包装 FutureTask</li>
+</ul>
+<!-- raw HTML omitted -->
+<p><img src="/images/5multithread/FutureTask.jpg" alt="FutureTask"></p>
+<h2 id="5-线程安全线程同步">5 线程安全线程同步</h2>
+<p>当我们使用多个线程访问同一资源的时候，且多个线程中对资源有写的操作，很容易出现线程安全问题。</p>
+<p>Java解决线程安全的方法之一是线程同步。</p>
+<p>如果有1段或N段代码，必须同时只有1个线程执行，只需要将这N段代码设为同步，同步时默认会提供锁，<strong>这些代码使用1个锁，不能使用多个锁</strong>。然后这些代码就可以一次只被1个线程执行了。</p>
+<p>线程同步的方法有 2种：</p>
+<ol>
+<li>synchronized关键字
+有可以细分为2种方法
+a) 同步代码块</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">synchronized</span><span style="color:#f92672">(</span><span style="color:#960050;background-color:#1e0010">🔒</span>名<span style="color:#f92672">)</span>
+	<span style="color:#f92672">{</span> 需同步的代码块 <span style="color:#f92672">}</span>
+</code></pre></div><p>🔒名 建议 使用this(实例方法) 或 类名.class(静态方法)。
+或
+b) 同步方法</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">synchronized</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">method</span><span style="color:#f92672">()</span>
+	<span style="color:#f92672">{</span>  <span style="color:#f92672">}</span>
+</code></pre></div><p>🔒名 默认是 this(实例方法) 或 类名.class(静态方法)。
+2. 显式锁
+有2种方式。
+a)</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">Object lock <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Object<span style="color:#f92672">()</span>
+<span style="color:#66d9ef">synchronized</span><span style="color:#f92672">(</span>lock<span style="color:#f92672">){</span>代码块<span style="color:#f92672">}</span>
+</code></pre></div><p>​		b)</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> Lock lock <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ReentrantLock<span style="color:#f92672">()</span>
+lock<span style="color:#f92672">.</span><span style="color:#a6e22e">lock</span><span style="color:#f92672">()</span>
+<span style="color:#f92672">{</span>代码块<span style="color:#f92672">}</span>
+lock<span style="color:#f92672">.</span><span style="color:#a6e22e">unlock</span><span style="color:#f92672">()</span>
+</code></pre></div><p>最后再强调一次:</p>
+<p>synchronized可以<strong>同时锁N个代码块</strong>，只<strong>需要用1个锁名</strong>即可(例如<strong>this</strong>) 。</p>
+<p>某个线程访问这N个代码块中的任意一个时，this将处于上锁状态，其他线程无法访问这N个代码。该线程访问结束后，this解锁，其他线程才可以访问。</p>
+<h2 id="6-线程通信">6 线程通信</h2>
+<p>多个线程操作同一个资源，且这些线程需要调度时，需要使用线程通信。</p>
+<h3 id="线程状态">线程状态</h3>
+<table>
+<thead>
+<tr>
+<th>线程状态</th>
+<th style="text-align:left">导致状态发生条件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NEW(新建)</td>
+<td style="text-align:left">线程刚被创建，但是并未启动。还没调用start方法。MyThread t = new MyThread只有线程对象，没有线程特征。</td>
+</tr>
+<tr>
+<td>Runnable(可运行)</td>
+<td style="text-align:left">线程可以在java虚拟机中运行的状态，可能正在运行自己代码，也可能没有，这取决于操作系统处理器。调用了t.start()方法   ：就绪（经典教法）</td>
+</tr>
+<tr>
+<td>Blocked(锁阻塞)</td>
+<td style="text-align:left">当一个线程试图获取一个对象锁，而该对象锁被其他的线程持有，则该线程进入Blocked状态；当该线程持有锁时，该线程将变成Runnable状态。</td>
+</tr>
+<tr>
+<td>Waiting(无限等待)</td>
+<td style="text-align:left">一个线程在等待另一个线程执行一个（唤醒）动作时，该线程进入Waiting状态。进入这个状态后是不能自动唤醒的，必须等待另一个线程调用notify或者notifyAll方法才能够唤醒。</td>
+</tr>
+<tr>
+<td>Timed Waiting(计时等待)</td>
+<td style="text-align:left">同waiting状态，有几个方法有超时参数，调用他们将进入Timed Waiting状态。这一状态将一直保持到超时期满或者接收到唤醒通知。带有超时参数的常用方法有Thread.sleep 、Object.wait。</td>
+</tr>
+<tr>
+<td>Teminated(被终止)</td>
+<td style="text-align:left">因为run方法正常退出而死亡，或者因为没有捕获的异常终止了run方法而死亡。</td>
+</tr>
+</tbody>
+</table>
+<p>线程通信常用的方法有2种</p>
+<ol>
+<li>synchronized 锁  +  锁名.wait(时间)  锁名.notify()</li>
+<li>Reentrant Lock锁  +  Condition  .await()   .signal()</li>
+</ol>
+<h2 id="7-线程池">7 线程池</h2>
+<p>Java里面线程池的顶级接口是<code>java.util.concurrent.Executor</code>，但是严格意义上讲<code>Executor</code>并不是一个线程池，而只是一个执行线程的工具。真正的线程池接口是<code>java.util.concurrent.ExecutorService</code>。</p>
+<p>要配置一个线程池是比较复杂的，尤其是对于线程池的原理不是很清楚的情况下，很有可能配置的线程池不是较优的，因此在<code>java.util.concurrent.Executors</code>线程工厂类里面提供了一些静态工厂，生成一些常用的线程池。官方建议使用Executors工程类来创建线程池对象。</p>
+<!-- raw HTML omitted -->
+<p><img src="/images/5multithread/ThreadPool.png" alt="ThreadPool"></p>
+<p>线程池里的线程可以是Runnable，也可以是 Callable ，submit函数如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">Future<span style="color:#f92672">&lt;?&gt;</span> submit<span style="color:#f92672">(</span>Runnable task<span style="color:#f92672">)</span>
+<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> Future<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">submit</span><span style="color:#f92672">(</span>Runnable task<span style="color:#f92672">,</span> T result<span style="color:#f92672">);</span>   <span style="color:#75715e">// 不是很懂怎么用
+</span><span style="color:#75715e"></span><span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> Future<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">submit</span><span style="color:#f92672">(</span>Callable<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> task<span style="color:#f92672">);</span> <span style="color:#75715e">// 返回的Future对象， call()返回值 调用 result.get()得到该值
+</span></code></pre></div><h2 id="8-死锁">8 死锁</h2>
+<p>老师演示的经典死锁代码</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> Object lock1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Object<span style="color:#f92672">();</span>
+<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> Object lock2 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Object<span style="color:#f92672">();</span>
+
+<span style="color:#66d9ef">new</span> Thread<span style="color:#f92672">(</span> <span style="color:#66d9ef">new</span> Runnable<span style="color:#f92672">(){</span>
+	override <span style="color:#a6e22e">run</span><span style="color:#f92672">()</span>
+		<span style="color:#66d9ef">synchronized</span><span style="color:#f92672">(</span>lock1<span style="color:#f92672">){</span>
+		    Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">sleep</span><span style="color:#f92672">(</span>1000<span style="color:#f92672">)</span>
+		    <span style="color:#66d9ef">synchronized</span><span style="color:#f92672">(</span>lock2<span style="color:#f92672">){</span>搞事情<span style="color:#f92672">}</span>
+            <span style="color:#e6db74">&#34;线程1&#34;</span><span style="color:#f92672">.</span><span style="color:#a6e22e">start</span><span style="color:#f92672">()</span>
+
+<span style="color:#66d9ef">new</span> Thread<span style="color:#f92672">(</span> <span style="color:#66d9ef">new</span> Runnable<span style="color:#f92672">(){</span>
+	override <span style="color:#a6e22e">run</span><span style="color:#f92672">()</span>
+		<span style="color:#66d9ef">synchronized</span><span style="color:#f92672">(</span>lock2<span style="color:#f92672">){</span>
+		    Thread<span style="color:#f92672">.</span><span style="color:#a6e22e">sleep</span><span style="color:#f92672">(</span>1000<span style="color:#f92672">)</span>
+		    <span style="color:#66d9ef">synchronized</span><span style="color:#f92672">(</span>lock1<span style="color:#f92672">){</span>搞事情<span style="color:#f92672">}</span>
+            <span style="color:#e6db74">&#34;线程2&#34;</span><span style="color:#f92672">.</span><span style="color:#a6e22e">start</span><span style="color:#f92672">()</span>
+</code></pre></div><ul class="pa0">
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://sgz886.github.io/" >
+    &copy;  Gordon Su's blog 2020 
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

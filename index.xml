@@ -6,7 +6,16 @@
     <description>Recent content on Gordon Su&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zn-Hans</language>
-    <lastBuildDate>Sat, 28 Nov 2020 12:12:09 +0800</lastBuildDate><atom:link href="http://sgz886.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 30 Dec 2020 15:15:10 +0800</lastBuildDate><atom:link href="http://sgz886.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>HTML常用标签</title>
+      <link>http://sgz886.github.io/posts/html%E5%B8%B8%E7%94%A8%E6%A0%87%E7%AD%BE/</link>
+      <pubDate>Wed, 30 Dec 2020 15:15:10 +0800</pubDate>
+      
+      <guid>http://sgz886.github.io/posts/html%E5%B8%B8%E7%94%A8%E6%A0%87%E7%AD%BE/</guid>
+      <description>HTML常用标签 1 a标签 作用  跳转到外部页面 跳转内部锚点 跳转到邮箱、电话等  属性  href target download rel=noopener  href取值  网址   https://google.com http://google.com //google.com (这是无协议网址,继承当前协议)  路径   /a/b/c 绝对路径 a/b/c 相对路径 index.html 和 ./index.html  伪协议   javascript:代码; (不常用) mailto:邮箱 tel:电话  ID   href=#id号  target取值  内置名字   _self 在当前页面打开 _blank 在新页面打开 _top _parent  程序员命名   windows的name 自己取值 iframe的name  2 img标签 作用 发出get请求，展示一张图片</description>
+    </item>
+    
     <item>
       <title>Multithread</title>
       <link>http://sgz886.github.io/posts/multithread/</link>

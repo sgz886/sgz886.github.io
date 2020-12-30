@@ -36,7 +36,7 @@
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://sgz886.github.io/" />
-<meta property="og:updated_time" content="2020-11-28T12:12:09+08:00" />
+<meta property="og:updated_time" content="2020-12-30T15:15:10+08:00" />
 <meta itemprop="name" content="Gordon Su&#39;s blog">
 <meta itemprop="description" content="">
 <meta name="twitter:card" content="summary"/>
@@ -129,6 +129,30 @@
       
       <div class="blah w-100">
         <h1 class="f3 fw1 athelas mt0 lh-title">
+          <a href="http://sgz886.github.io/posts/html%E5%B8%B8%E7%94%A8%E6%A0%87%E7%AD%BE/" class="color-inherit dim link">
+            HTML常用标签
+            </a>
+        </h1>
+        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
+          HTML常用标签 1 a标签 作用  跳转到外部页面 跳转内部锚点 跳转到邮箱、电话等  属性  href target download rel=noopener  href取值  网址   https://google.com http://google.com //google.com (这是无协议网址,继承当前协议)  路径   /a/b/c 绝对路径 a/b/c 相对路径 index.html 和 ./index.html  伪协议   javascript:代码; (不常用) mailto:邮箱 tel:电话  ID   href=#id号  target取值  内置名字   _self 在当前页面打开 _blank 在新页面打开 _top _parent  程序员命名   windows的name 自己取值 iframe的name  2 img标签 作用 发出get请求，展示一张图片
+        </div>
+          <a href="http://sgz886.github.io/posts/html%E5%B8%B8%E7%94%A8%E6%A0%87%E7%AD%BE/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+          </div>
+        
+          <div class="relative w-100 mb4">
+            
+<article class="bb b--black-10">
+  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
+    <div class="flex flex-column flex-row-ns">
+      
+      <div class="blah w-100">
+        <h1 class="f3 fw1 athelas mt0 lh-title">
           <a href="http://sgz886.github.io/posts/multithread/" class="color-inherit dim link">
             Multithread
             </a>
@@ -181,48 +205,18 @@ Set  A collection that contains no duplicate elements. More formally, sets conta
 
           </div>
         
-          <div class="relative w-100 mb4">
-            
-<article class="bb b--black-10">
-  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
-    <div class="flex flex-column flex-row-ns">
-      
-      <div class="blah w-100">
-        <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="http://sgz886.github.io/posts/pachage-management-java-maven/" class="color-inherit dim link">
-            Java包管理和Maven(Pachage Management and Maven)
-            </a>
-        </h1>
-        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          包管理 我们要使用一些第三方类，就要告诉JVM从哪里找。
-JVM在classpath 参数（一般情况是很多个jar包的绝对路径）中寻找类。
-包管理可以自动生成classpath参数，以及解决各个包的依赖关系中产生的冲突。
-Maven是Java最著名的包管理工具。
-maven介绍 Maven按照约定为所有的包编号，方便检索，就像一个图书分类编号的规则，很好用。最重要的是下面3个字段：
-groupId # 组织唯一的标识符 artifactId # 项目ID version # 版本号 Maven对包依赖冲突的解决原则：
- 离工程最近的包胜出 距离相同，则先加载的包胜出  下面常见异常一般是包依赖冲突导致的。
- AbstractMethodError NoClassDefFoundError ClassNotFoundException LinkageError  Maven的解决方法  在dependencies里将要使用的版本放进去，通过距离工程最近的优势排除掉其他包 在产生冲突的包的dependency中将该包exclude  在硬核空间的练习 在老师给的测试题目中，pom.xml引入了4个依赖包，分别是 test-library-a , spring-web, junit-jupiter-api, junit-jupiter-engine
-查看冲突 使用 Maven helper 插件，它把冲突的插件显示了出来
-对 test-library-a和spring-web的分析
-test-library-a 在老师的指导下，查看了test-library-a的源代码，其中build.gradle文件指出了它依赖 org.springframework:spring-web:4.3.6.RELEASE，若打开 external libraries的&rsquo;test-library-a.jar&rsquo;所在文件夹，能看到一个pom.xml，也有类似的dependency语句。
-spring-web 搜索源代码，在spring5.08版官方文档中看到了报错的函数(getJsonpFunction())。
-getJsonpFunction @Deprecated @Nullable public java.lang.String getJsonpFunction() Deprecated. Will be removed as of Spring Framework 5.1, use CORS instead.
-        </div>
-          <a href="http://sgz886.github.io/posts/pachage-management-java-maven/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-        
-      </div>
-    </div>
-  </div>
-</article>
-
-          </div>
-        
       </section>
 
       
       <section class="w-100">
         <h1 class="f3">More</h1>
         
+        
+          <h2 class="f5 fw4 mb4 dib mr3">
+            <a href="http://sgz886.github.io/posts/pachage-management-java-maven/" class="link black dim">
+              Java包管理和Maven(Pachage Management and Maven)
+            </a>
+          </h2>
         
           <h2 class="f5 fw4 mb4 dib mr3">
             <a href="http://sgz886.github.io/posts/hogo_blog/" class="link black dim">

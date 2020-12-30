@@ -6,7 +6,24 @@
     <description>Recent content in Posts on Gordon Su&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zn-Hans</language>
-    <lastBuildDate>Wed, 30 Dec 2020 15:15:10 +0800</lastBuildDate><atom:link href="http://sgz886.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 30 Dec 2020 23:12:25 +0800</lastBuildDate><atom:link href="http://sgz886.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>浅析URL</title>
+      <link>http://sgz886.github.io/posts/%E6%B5%85%E6%9E%90url/</link>
+      <pubDate>Wed, 30 Dec 2020 23:12:25 +0800</pubDate>
+      
+      <guid>http://sgz886.github.io/posts/%E6%B5%85%E6%9E%90url/</guid>
+      <description>浅析URL URL的构成 URL由 协议+域名+路径+查询参数+锚点 构成
+ 协议 域名 路径 查询参数 锚点  DNS的作用 DNS(Domain Name System),是域名系统的缩写。作用是将域名与IP地址相互映射，使人们可以通过域名访问互联网资源。
+nslookup的作用 该命令的作用是查询域名对应的IP地址 nslookup github.com 返回如下结果
+Non-authoritative answer: Name: github.com Address: 13.229.188.59 IP的作用 IP(Internet Protocol)是一个协议。我们在互联网的世界中，使用IP地址做定位。就像现实世界中的门牌地址一样。 IP主要约定了2件事：
+ 如何定位1台设备 如何封装数据报文，以跟其他设备交流 IP地址包括外网IP地址和内网IP地址。  ping的作用 ping命令给目标主机发送数据包，并通过统计数据包的往返时间和丢失率，去判断与目标主机的网络连通状况。
+域名是什么 域名（Domain Name）是对IP地址的别称，特点是方便记忆。
+几类域名 com是顶级域名
+google.com是二级域名
+www.google.com是三级域名</description>
+    </item>
+    
     <item>
       <title>HTML常用标签</title>
       <link>http://sgz886.github.io/posts/html%E5%B8%B8%E7%94%A8%E6%A0%87%E7%AD%BE/</link>
